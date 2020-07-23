@@ -12,6 +12,42 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-remote-config.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyC74nyTwJfXFcS6uOVwdCPcWSN471O2i3g",
+        authDomain: "todolist-374e5.firebaseapp.com",
+        databaseURL: "https://todolist-374e5.firebaseio.com",
+        projectId: "todolist-374e5",
+        storageBucket: "todolist-374e5.appspot.com",
+        messagingSenderId: "3075954522",
+        appId: "1:3075954522:web:122e33434ca223072d4563",
+        measurementId: "G-M9F3SGQJL8"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      
+      const remoteConfig = firebase.remoteConfig();
+      remoteConfig.settings = {
+        minimumFetchIntervalMillis: 3600000,
+      };
+      remoteConfig.defaultConfig = ({
+        'app_name': 'todoList',
+        'Quiz_message': 'Exam questions'
+      });     
+      remoteConfig.fetchAndActivate().then(() => {
+        let app_name = remoteConfig.getValue('app_name').asString()
+        let Quiz_message = remoteConfig.getValue('Quiz_message').asString()
+        document.querySelector('#remotemessage').innerHTML = app_name 
+        document.querySelector('#quizmessage').innerHTML = Quiz_message
+        
+      })
+    </script>
   </body>
 </html>
