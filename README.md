@@ -1,4 +1,8 @@
 # todolist
+```
+firebase應用:
+切換不同裝置時，置頂訊息會切換
+```
 
 ## Project setup
 ```
